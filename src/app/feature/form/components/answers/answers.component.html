@@ -1,0 +1,22 @@
+<b><h3>Please tell us about yourself</h3></b>
+<p>{{ listData?.about }}</p>
+
+<div *ngFor="let question of listData?.questions">
+  <b>
+    <h3>{{ question.text }}</h3></b
+  >
+  <span class="list-section">
+    <ul>
+      <ng-container *ngFor="let item of question.answerOptions">
+        <li *ngIf="item.checked">
+          {{ item.value }}
+        </li>
+      </ng-container>
+      <li *ngIf="question.otherAnswer">Other - {{ question.userAnswer }}</li>
+    </ul>
+  </span>
+</div>
+
+<div>
+  <button mat-button (click)="back()">Back to Forms Builder</button>
+</div>

@@ -1,0 +1,53 @@
+<h1 mat-dialog-title>Please tell us about yourself *</h1>
+<div mat-dialog-content>
+  <mat-form-field class="full-width">
+    <textarea [(ngModel)]="about" matInput></textarea>
+  </mat-form-field>
+
+  <span class="list-section" *ngFor="let question of lstQuestion">
+    <mat-label
+      >{{ question.text }} <span *ngIf="question.isRequired">*</span></mat-label
+    >
+    <ul>
+      <li *ngFor="let item of question.answerOptions">
+        <mat-checkbox
+          class="example-margin"
+          [checked]="item.checked"
+          (change)="item.checked = !item.checked"
+        >
+          {{ item.value }}
+        </mat-checkbox>
+      </li>
+      <li *ngIf="question.otherAnswer">
+        <mat-checkbox
+          class="example-margin"
+          [checked]="question.answerFormat === answerFormat.PARAGRAPH"
+          (change)="
+            question.answerFormat === answerFormat.PARAGRAPH
+              ? (question.answerFormat = answerFormat.CHECKBOX)
+              : (question.answerFormat = answerFormat.PARAGRAPH)
+          "
+        >
+          Other
+        </mat-checkbox>
+      </li>
+      <mat-form-field
+        class="full-width"
+        *ngIf="question.answerFormat === answerFormat.PARAGRAPH"
+      >
+        <input
+          matInput
+          placeholder="Enter your other answer"
+          [(ngModel)]="question.userAnswer"
+        />
+      </mat-form-field>
+    </ul>
+  </span>
+
+  <a class="add-more" (click)="openAddNewQuestion()">Add New Question</a>
+</div>
+<div mat-dialog-actions class="float-right">
+  <button mat-button cdkFocusInitial (click)="submit()">
+    Review my answers >
+  </button>
+</div>
